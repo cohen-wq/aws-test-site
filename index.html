@@ -2,345 +2,542 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Cohen Test Site</title>
+  <title>Cohen Blanchard · Web & AI Studio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Web development, AI integration, and social media scaling services by Cohen Blanchard." />
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #020617;
+      --bg-soft: #0b1120;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56,189,248,0.12);
+      --text: #e5e7eb;
+      --text-muted: #9ca3af;
+      --border: #1f2937;
+      --danger: #f97373;
+      --success: #22c55e;
     }
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: #111827;
-      background-color: #f3f4f6;
+      font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background: radial-gradient(circle at top, #0f172a 0, #020617 55%, #000 100%);
+      color: var(--text);
       line-height: 1.6;
     }
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
+
     header {
-      background: linear-gradient(135deg, #1d4ed8, #3b82f6);
-      color: white;
-      padding: 24px 20px;
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(2,6,23,0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
     }
     .container {
-      max-width: 960px;
+      max-width: 1024px;
       margin: 0 auto;
+      padding: 14px 20px;
     }
     .nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 24px;
-    }
-    .nav h1 {
-      font-size: 1.4rem;
-      font-weight: 700;
-    }
-    .nav a {
-      color: #e5e7eb;
-      margin-left: 16px;
-      text-decoration: none;
-      font-size: 0.95rem;
-    }
-    .nav a:hover {
-      color: #ffffff;
-      text-decoration: underline;
-    }
-    .hero {
-      padding: 20px 0 40px;
-      display: grid;
-      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
-      gap: 24px;
-      align-items: center;
-    }
-    .hero-text h2 {
-      font-size: 2.3rem;
-      margin-bottom: 12px;
-    }
-    .hero-text p {
-      font-size: 1rem;
-      margin-bottom: 16px;
-    }
-    .hero-actions {
-      display: flex;
       gap: 12px;
-      flex-wrap: wrap;
     }
-    .btn-primary,
-    .btn-secondary {
-      padding: 10px 18px;
-      border-radius: 999px;
-      font-size: 0.95rem;
-      border: 2px solid transparent;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
+    .nav-left { display: flex; gap: 10px; align-items: center; }
+    .logo-pill {
+      width: 32px; height: 32px; border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #38bdf8, #0ea5e9, #0f172a);
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; font-weight: 700; border: 1px solid rgba(148,163,184,0.7);
+      box-shadow: 0 0 24px rgba(56,189,248,0.6);
     }
+    .nav-title { display: flex; flex-direction: column; }
+    .nav-title span:first-child { font-weight: 600; font-size: 0.95rem; }
+    .nav-title span:last-child { font-size: 0.8rem; color: var(--text-muted); }
+    .nav-links { display: flex; gap: 16px; font-size: 0.85rem; flex-wrap: wrap; }
+    .nav-links a {
+      color: var(--text-muted); text-decoration: none;
+      border-bottom: 1px solid transparent; padding-bottom: 1px;
+    }
+    .nav-links a:hover { color: var(--text); border-color: var(--accent); }
+
+    main { flex: 1; }
+
+    .hero {
+      padding: 26px 20px 20px;
+    }
+    .hero-grid {
+      max-width: 1024px; margin: 0 auto;
+      display: grid; grid-template-columns: minmax(0,1.4fr) minmax(0,1fr);
+      gap: 22px; align-items: center;
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 10px; border-radius: 999px;
+      background: rgba(15,23,42,0.98);
+      border: 1px solid rgba(56,189,248,0.6);
+      color: #bae6fd; font-size: 0.75rem; margin-bottom: 10px;
+    }
+    .badge-dot {
+      width: 7px; height: 7px; border-radius: 999px;
+      background: #22c55e; box-shadow: 0 0 14px rgba(34,197,94,0.9);
+    }
+    .hero h1 { font-size: clamp(1.9rem,3vw,2.4rem); margin-bottom: 10px; }
+    .hero h1 span { color: var(--accent); }
+    .hero-sub {
+      font-size: 0.95rem; color: var(--text-muted);
+      margin-bottom: 16px; max-width: 36rem;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+    .btn {
+      padding: 9px 16px; border-radius: 999px; font-size: 0.9rem;
+      border: 1px solid transparent; cursor: pointer;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+      transition: background 0.15s,border-color 0.15s,transform 0.12s;
+    }
+    .btn:active { transform: translateY(1px); }
     .btn-primary {
-      background-color: #fbbf24;
-      color: #111827;
-      border-color: #fbbf24;
-      font-weight: 600;
+      background: linear-gradient(135deg,#38bdf8,#0ea5e9);
+      color: #020617; font-weight: 600;
+      border-color: rgba(56,189,248,0.25);
+      box-shadow: 0 8px 22px rgba(56,189,248,0.35);
     }
     .btn-primary:hover {
-      background-color: #f59e0b;
-      border-color: #f59e0b;
+      background: linear-gradient(135deg,#0ea5e9,#0369a1);
     }
-    .btn-secondary {
-      background-color: transparent;
-      color: #e5e7eb;
-      border-color: #e5e7eb;
+    .btn-outline {
+      background: transparent; color: var(--text-muted);
+      border-color: rgba(148,163,184,0.7);
     }
-    .btn-secondary:hover {
-      background-color: rgba(249,250,251,0.15);
+    .btn-outline:hover {
+      border-color: var(--accent);
+      background: rgba(15,23,42,0.9); color: var(--text);
     }
+    .hero-meta { font-size: 0.8rem; color: var(--text-muted); }
+    .hero-meta strong { color: var(--accent); }
+
     .hero-card {
-      background-color: rgba(15,23,42,0.8);
-      border-radius: 16px;
-      padding: 18px 16px;
-      box-shadow: 0 10px 25px rgba(15,23,42,0.3);
-      border: 1px solid rgba(148,163,184,0.4);
+      background: radial-gradient(circle at top, #0f172a, #020617);
+      border-radius: 16px; padding: 16px 14px;
+      border: 1px solid rgba(148,163,184,0.55);
+      box-shadow: 0 18px 40px rgba(15,23,42,0.95);
     }
-    .hero-card h3 {
-      font-size: 1rem;
-      margin-bottom: 8px;
-      color: #e5e7eb;
-    }
-    .hero-card p {
-      font-size: 0.9rem;
-      color: #cbd5f5;
-      margin-bottom: 10px;
-    }
-    .hero-highlight {
-      font-size: 0.85rem;
-      color: #a5b4fc;
+    .hero-card h2 { font-size: 1rem; margin-bottom: 8px; }
+    .hero-card p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+    .pill {
+      font-size: 0.75rem; padding: 3px 8px; border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.7); background: rgba(15,23,42,0.96);
     }
 
-    main {
-      padding: 32px 20px 40px;
+    .section {
+      max-width: 1024px; margin: 0 auto;
+      padding: 18px 20px 12px;
     }
-    section {
-      margin-bottom: 36px;
-    }
-    section h2 {
-      font-size: 1.6rem;
-      margin-bottom: 10px;
-    }
-    section p.section-intro {
-      color: #4b5563;
-      margin-bottom: 18px;
-      font-size: 0.95rem;
-    }
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
+    .section-header { margin-bottom: 10px; }
+    .section-title { font-size: 1.25rem; margin-bottom: 4px; }
+    .section-sub { font-size: 0.85rem; color: var(--text-muted); }
+
+    .grid-3 {
+      display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      gap: 14px;
     }
     .card {
-      background-color: white;
-      border-radius: 14px;
-      padding: 16px 14px;
-      box-shadow: 0 6px 18px rgba(15,23,42,0.06);
-      border: 1px solid #e5e7eb;
+      background: rgba(15,23,42,0.98);
+      border-radius: 14px; padding: 14px 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 26px rgba(15,23,42,0.85);
     }
-    .card h3 {
-      font-size: 1.1rem;
-      margin-bottom: 6px;
+    .card-label {
+      font-size: 0.75rem; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #a5b4fc; margin-bottom: 4px;
     }
-    .card p {
-      font-size: 0.9rem;
-      color: #4b5563;
-    }
+    .card h3 { font-size: 1rem; margin-bottom: 4px; }
+    .card p { font-size: 0.85rem; color: var(--text-muted); }
 
-    .about {
-      display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-      gap: 18px;
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+      gap: 14px;
     }
-    .about-block {
-      background-color: white;
-      border-radius: 14px;
-      padding: 16px 14px;
-      border: 1px solid #e5e7eb;
+    .price { font-size: 1.2rem; font-weight: 600; margin: 4px 0; }
+    .price span { font-size: 0.8rem; color: var(--text-muted); font-weight: 400; }
+    .price-list {
+      list-style: none; margin-top: 6px;
+      font-size: 0.8rem; color: var(--text-muted);
     }
-    .about-highlight {
-      font-weight: 600;
-      color: #1d4ed8;
-      font-size: 0.9rem;
-      margin-bottom: 4px;
+    .price-list li::before { content: "• "; color: var(--accent); }
+
+    .skills-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .skills-tags span {
+      font-size: 0.8rem; padding: 4px 9px; border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.7); background: rgba(15,23,42,0.98);
     }
 
     .contact-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-      gap: 20px;
+      display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,1fr);
+      gap: 16px; align-items: flex-start;
     }
     form {
-      background-color: white;
-      border-radius: 14px;
-      padding: 16px 14px;
-      border: 1px solid #e5e7eb;
+      background: rgba(15,23,42,0.98);
+      border-radius: 14px; padding: 14px 12px;
+      border: 1px solid var(--border);
     }
     label {
-      display: block;
-      font-size: 0.85rem;
-      margin-bottom: 4px;
-      color: #374151;
+      display: block; font-size: 0.8rem;
+      margin-bottom: 3px; color: var(--text-muted);
     }
-    input,
-    textarea {
-      width: 100%;
-      padding: 8px 10px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      border: 1px solid #d1d5db;
-      font-size: 0.9rem;
+    input, textarea {
+      width: 100%; padding: 7px 9px; margin-bottom: 8px;
+      border-radius: 9px; border: 1px solid #1f2937;
+      background: #020617; color: var(--text); font-size: 0.85rem;
       font-family: inherit;
     }
-    textarea {
-      min-height: 80px;
-      resize: vertical;
+    input:focus, textarea:focus {
+      outline: none; border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(56,189,248,0.5);
     }
-    .contact-info {
-      font-size: 0.95rem;
-      color: #374151;
+    textarea { resize: vertical; min-height: 80px; }
+    .contact-info { font-size: 0.85rem; color: var(--text-muted); }
+    .contact-info p { margin-bottom: 6px; }
+    .contact-info strong { color: var(--text); }
+    .contact-highlight {
+      background: var(--accent-soft); border-radius: 10px;
+      padding: 8px 9px; border: 1px solid rgba(56,189,248,0.6);
+      font-size: 0.8rem; margin-bottom: 8px;
     }
-    .contact-info p {
-      margin-bottom: 6px;
+    .status {
+      font-size: 0.8rem; margin-bottom: 6px;
+      min-height: 1em;
     }
-    .contact-info strong {
-      color: #111827;
-    }
+    .status.error { color: var(--danger); }
+    .status.success { color: var(--success); }
 
     footer {
-      padding: 14px 20px 20px;
-      text-align: center;
-      font-size: 0.8rem;
-      color: #6b7280;
+      border-top: 1px solid var(--border);
+      padding: 10px 20px 14px;
+      text-align: center; font-size: 0.75rem;
+      color: var(--text-muted);
     }
 
     @media (max-width: 768px) {
-      .hero,
-      .about,
-      .contact-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .nav {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-      }
+      .hero-grid, .contact-grid { grid-template-columns: minmax(0,1fr); }
+      .nav { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
+<div class="page">
   <header>
     <div class="container">
-      <nav class="nav">
-        <h1>Cohen Web Studio</h1>
-        <div>
-          <a href="#services">Services</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
-        </div>
-      </nav>
-
-      <div class="hero">
-        <div class="hero-text">
-          <h2>Simple, Modern Sites for Real Businesses</h2>
-          <p>
-            A clean, fast website that actually works for your business —
-            built and hosted on rock-solid infrastructure.
-          </p>
-          <div class="hero-actions">
-            <a href="#contact" class="btn-primary">Get in Touch</a>
-            <a href="#services" class="btn-secondary">View Services</a>
+      <div class="nav">
+        <div class="nav-left">
+          <div class="logo-pill">CB</div>
+          <div class="nav-title">
+            <span>Cohen Blanchard</span>
+            <span>Web & AI Studio</span>
           </div>
         </div>
-        <div class="hero-card">
-          <h3>Live Demo Site</h3>
-          <p>This page is a working example deployed from GitHub to AWS Amplify.</p>
-          <p class="hero-highlight">
-            Edit the code in <code>index.html</code>, push to GitHub, and this site updates automatically.
-          </p>
-        </div>
+        <nav class="nav-links">
+          <a href="#services">Services</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#skills">Skills</a>
+          <a href="#contact">Contact</a>
+        </nav>
       </div>
     </div>
   </header>
 
-  <main class="container">
-    <section id="services">
-      <h2>Services</h2>
-      <p class="section-intro">
-        This is just sample content so you can visualize how a small one-page site would look.
-      </p>
-      <div class="services-grid">
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="badge">
+            <span class="badge-dot"></span>
+            <span>Web development + AI-powered systems for real businesses</span>
+          </div>
+          <h1>
+            I build modern websites and AI-powered tools<br />
+            that actually help your business run better <span>— not just look good.</span>
+          </h1>
+          <p class="hero-sub">
+            I’m Cohen, a web developer who combines clean design with AI and automation.
+            I work with local and online businesses to create sites and systems that are
+            simple to use, easy to manage, and built on solid tech (AWS, GitHub, AI tools).
+          </p>
+          <div class="hero-actions">
+            <a href="#contact" class="btn btn-primary">Start a project</a>
+            <a href="#pricing" class="btn btn-outline">See pricing</a>
+          </div>
+          <p class="hero-meta">
+            Hosted on <strong>AWS</strong> · Deployed via <strong>GitHub</strong> ·
+            AI-assisted development & integration
+          </p>
+        </div>
+        <aside class="hero-card">
+          <h2>What I help with</h2>
+          <p>
+            • Custom websites for local businesses<br />
+            • AI features like chat, automation, and smarter lead handling<br />
+            • Simple systems for turning attention into customers
+          </p>
+          <div class="hero-tags">
+            <span class="pill">Web development</span>
+            <span class="pill">AI integration</span>
+            <span class="pill">AI services</span>
+            <span class="pill">Social media scaling</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section" id="services">
+      <div class="section-header">
+        <h2 class="section-title">Services</h2>
+        <p class="section-sub">
+          A focused set of services around what I’m best at: building clean sites, weaving in AI,
+          and supporting the online side of your business.
+        </p>
+      </div>
+      <div class="grid-3">
         <div class="card">
-          <h3>Landing Pages</h3>
-          <p>Single-page sites focused on leads, calls, or bookings for local businesses.</p>
+          <div class="card-label">Web development</div>
+          <h3>Custom websites & landing pages</h3>
+          <p>
+            Clean, responsive sites for small businesses and personal brands.
+            Home, services, about, and contact — set up to be easy to read and easy to update.
+          </p>
         </div>
         <div class="card">
-          <h3>Multi-Page Sites</h3>
-          <p>Home, About, Services, and Contact with a consistent design and fast load times.</p>
+          <div class="card-label">AI integration</div>
+          <h3>Practical AI in your workflow</h3>
+          <p>
+            Simple AI features like smart contact forms, basic chat, and automation that
+            help with lead intake, FAQs, or repetitive tasks — not overkill, just useful.
+          </p>
         </div>
         <div class="card">
-          <h3>Hosting & Updates</h3>
-          <p>Hosted on AWS with simple update workflows — change the content and redeploy.</p>
+          <div class="card-label">Social + systems</div>
+          <h3>Social media & funnel support</h3>
+          <p>
+            Landing pages for campaigns, link-in-bio pages, and simple funnels that turn
+            attention into calls, forms, or booked work.
+          </p>
         </div>
       </div>
     </section>
 
-    <section id="about">
-      <h2>About This Demo</h2>
-      <div class="about">
-        <div class="about-block">
-          <p class="about-highlight">Built with HTML + CSS</p>
-          <p>
-            This entire page is a single <code>index.html</code> file. No frameworks, no complexity —
-            just clean structure you can later swap out for a full client design.
-          </p>
+    <!-- PRICING -->
+    <section class="section" id="pricing">
+      <div class="section-header">
+        <h2 class="section-title">Pricing</h2>
+        <p class="section-sub">
+          Final pricing depends on the project, but these ranges give you a straightforward idea
+          of what working together looks like.
+        </p>
+      </div>
+      <div class="pricing-grid">
+        <div class="card">
+          <div class="card-label">Starter</div>
+          <h3>Single-page site</h3>
+          <p class="price">$400–$650 <span>one-time</span></p>
+          <ul class="price-list">
+            <li>One-page website or landing page</li>
+            <li>Mobile-friendly design</li>
+            <li>Clear call to action (call, text, or email)</li>
+            <li>Perfect for simple “online presence” sites</li>
+          </ul>
         </div>
-        <div class="about-block">
-          <p class="about-highlight">Deployed via GitHub → AWS Amplify</p>
-          <p>
-            Whenever you change this file in GitHub and commit, Amplify automatically redeploys and
-            your live site updates. This is the same flow you’ll use for real projects.
-          </p>
+        <div class="card">
+          <div class="card-label">Standard</div>
+          <h3>Multi-page site</h3>
+          <p class="price">$800–$1,400 <span>one-time</span></p>
+          <ul class="price-list">
+            <li>Home, About, Services, Contact (and more if needed)</li>
+            <li>Custom layout and basic animations</li>
+            <li>Contact form wired to email</li>
+            <li>Deployed to AWS under your ownership</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-label">Plus</div>
+          <h3>Web + AI features</h3>
+          <p class="price">$1,500+ <span>project-based</span></p>
+          <ul class="price-list">
+            <li>Everything in Standard tier</li>
+            <li>AI tools like simple chat, automation, or custom flows</li>
+            <li>Designed around how your business actually works</li>
+            <li>Ongoing support available if needed</li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <section id="contact">
-      <h2>Contact</h2>
+    <!-- SKILLS -->
+    <section class="section" id="skills">
+      <div class="section-header">
+        <h2 class="section-title">Skill set</h2>
+        <p class="section-sub">
+          I mix web fundamentals with AI tools so the things I build are not just “pretty websites”
+          but useful pieces of your business.
+        </p>
+      </div>
+      <div class="card">
+        <h3>What I work with</h3>
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-top:4px;">
+          Web development · AI integration · AI-powered services · lead capture · automation ·
+          social media landing pages · and more as I keep learning and building.
+        </p>
+        <div class="skills-tags">
+          <span>Responsive web design</span>
+          <span>AWS Amplify hosting</span>
+          <span>Static sites & landing pages</span>
+          <span>AI chat & simple assistants</span>
+          <span>Lead capture systems</span>
+          <span>Automation basics</span>
+          <span>Social media scaling support</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <div class="section-header">
+        <h2 class="section-title">Contact</h2>
+        <p class="section-sub">
+          Ready to talk, want a quote, or just curious what’s possible?
+          Reach out with a short message and I’ll get back to you.
+        </p>
+      </div>
       <div class="contact-grid">
-        <form onsubmit="alert('This is just a demo form – in a real site this would send an email or store a lead.'); return false;">
+        <form id="contact-form">
+          <div class="contact-highlight">
+            This form is built to send an email through EmailJS.<br />
+            Once configured, messages go straight to
+            <strong>cohen.p.blanchard@gmail.com</strong>.
+          </div>
+          <div id="form-status" class="status"></div>
+
           <label for="name">Name</label>
-          <input id="name" type="text" placeholder="Your name" />
+          <input id="name" name="name" type="text" placeholder="Your name" required />
 
           <label for="email">Email</label>
-          <input id="email" type="email" placeholder="you@example.com" />
+          <input id="email" name="email" type="email" placeholder="you@example.com" required />
 
-          <label for="message">Message</label>
-          <textarea id="message" placeholder="Tell me a bit about your project"></textarea>
+          <label for="message">Project details</label>
+          <textarea id="message" name="message" placeholder="Tell me a bit about what you need..." required></textarea>
 
-          <button type="submit" class="btn-primary" style="margin-top: 4px;">Send Message</button>
+          <button type="submit" class="btn btn-primary" style="margin-top:4px;">Send message</button>
         </form>
+
         <div class="contact-info">
-          <p><strong>Demo Only</strong> — replace this with real info for a client site.</p>
-          <p><strong>Phone:</strong> (555) 123-4567</p>
-          <p><strong>Email:</strong> hello@example.com</p>
-          <p><strong>Location:</strong> Dallas, TX</p>
+          <p><strong>Email:</strong>
+            <a href="mailto:cohen.p.blanchard@gmail.com" style="color:var(--accent);text-decoration:none;">
+              cohen.p.blanchard@gmail.com
+            </a>
+          </p>
+          <p><strong>Phone:</strong>
+            <a href="tel:+19723102275" style="color:var(--accent);text-decoration:none;">
+              (972) 310-2275
+            </a>
+          </p>
+          <p style="margin-top:8px;">
+            Based in the Dallas, TX area. Happy to work locally or completely online.
+          </p>
+          <p style="margin-top:10px;font-size:0.8rem;color:var(--text-muted);">
+            If forms aren’t your thing, a quick text or email with a short description
+            of your project works just as well.
+          </p>
         </div>
       </div>
     </section>
   </main>
 
   <footer>
-    &copy; <span id="year"></span> Cohen Web Studio · Demo site running on AWS Amplify
+    &copy; <span id="year"></span> Cohen Blanchard · Web & AI Studio · Deployed via GitHub → AWS Amplify
   </footer>
+</div>
 
-  <script>
-    // Tiny script to keep the year current
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+<!-- EmailJS script -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  // Keep year updated
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // ===== EmailJS SETTINGS =====
+  // 1. Go to https://www.emailjs.com and create a free account.
+  // 2. Add an email service (Gmail, Outlook, etc.).
+  // 3. Create a template with variables: name, email, message.
+  // 4. Copy your:
+  //    - Public key
+  //    - Service ID
+  //    - Template ID
+  // 5. Paste them below:
+
+  const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY_HERE";
+  const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID_HERE";
+  const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID_HERE";
+
+  (function () {
+    if (EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY_HERE") {
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+    }
+  })();
+
+  const form = document.getElementById("contact-form");
+  const statusEl = document.getElementById("form-status");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    statusEl.textContent = "";
+    statusEl.className = "status";
+
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const message = form.message.value.trim();
+
+    if (!name || !email || !message) {
+      statusEl.textContent = "Please fill out all fields.";
+      statusEl.classList.add("error");
+      return;
+    }
+
+    // If you haven't set your EmailJS keys yet, fake success so UI still works
+    if (
+      EMAILJS_PUBLIC_KEY === "YOUR_PUBLIC_KEY_HERE" ||
+      EMAILJS_SERVICE_ID === "YOUR_SERVICE_ID_HERE" ||
+      EMAILJS_TEMPLATE_ID === "YOUR_TEMPLATE_ID_HERE"
+    ) {
+      statusEl.textContent =
+        "Demo mode: form submitted. Configure EmailJS to send real emails.";
+      statusEl.classList.add("success");
+      form.reset();
+      return;
+    }
+
+    statusEl.textContent = "Sending...";
+    const params = {
+      name: name,
+      email: email,
+      message: message,
+      to_email: "cohen.p.blanchard@gmail.com"
+    };
+
+    emailjs
+      .send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
+      .then(function () {
+        statusEl.textContent = "Message sent! I’ll reply as soon as I can.";
+        statusEl.classList.add("success");
+        form.reset();
+      })
+      .catch(function (error) {
+        console.error("EmailJS error:", error);
+        statusEl.textContent =
+          "Something went wrong sending the message. You can also email me directly.";
+        statusEl.classList.add("error");
+      });
+  });
+</script>
 </body>
 </html>
