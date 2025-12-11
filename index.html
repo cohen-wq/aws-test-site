@@ -1,11 +1,346 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>AWS Test</title>
+  <meta charset="UTF-8" />
+  <title>Cohen Test Site</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #111827;
+      background-color: #f3f4f6;
+      line-height: 1.6;
+    }
+    header {
+      background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+      color: white;
+      padding: 24px 20px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .nav h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+    .nav a {
+      color: #e5e7eb;
+      margin-left: 16px;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .nav a:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+    .hero {
+      padding: 20px 0 40px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      gap: 24px;
+      align-items: center;
+    }
+    .hero-text h2 {
+      font-size: 2.3rem;
+      margin-bottom: 12px;
+    }
+    .hero-text p {
+      font-size: 1rem;
+      margin-bottom: 16px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn-primary,
+    .btn-secondary {
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      border: 2px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-primary {
+      background-color: #fbbf24;
+      color: #111827;
+      border-color: #fbbf24;
+      font-weight: 600;
+    }
+    .btn-primary:hover {
+      background-color: #f59e0b;
+      border-color: #f59e0b;
+    }
+    .btn-secondary {
+      background-color: transparent;
+      color: #e5e7eb;
+      border-color: #e5e7eb;
+    }
+    .btn-secondary:hover {
+      background-color: rgba(249,250,251,0.15);
+    }
+    .hero-card {
+      background-color: rgba(15,23,42,0.8);
+      border-radius: 16px;
+      padding: 18px 16px;
+      box-shadow: 0 10px 25px rgba(15,23,42,0.3);
+      border: 1px solid rgba(148,163,184,0.4);
+    }
+    .hero-card h3 {
+      font-size: 1rem;
+      margin-bottom: 8px;
+      color: #e5e7eb;
+    }
+    .hero-card p {
+      font-size: 0.9rem;
+      color: #cbd5f5;
+      margin-bottom: 10px;
+    }
+    .hero-highlight {
+      font-size: 0.85rem;
+      color: #a5b4fc;
+    }
+
+    main {
+      padding: 32px 20px 40px;
+    }
+    section {
+      margin-bottom: 36px;
+    }
+    section h2 {
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+    }
+    section p.section-intro {
+      color: #4b5563;
+      margin-bottom: 18px;
+      font-size: 0.95rem;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background-color: white;
+      border-radius: 14px;
+      padding: 16px 14px;
+      box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+      border: 1px solid #e5e7eb;
+    }
+    .card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 6px;
+    }
+    .card p {
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    .about {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 18px;
+    }
+    .about-block {
+      background-color: white;
+      border-radius: 14px;
+      padding: 16px 14px;
+      border: 1px solid #e5e7eb;
+    }
+    .about-highlight {
+      font-weight: 600;
+      color: #1d4ed8;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 20px;
+    }
+    form {
+      background-color: white;
+      border-radius: 14px;
+      padding: 16px 14px;
+      border: 1px solid #e5e7eb;
+    }
+    label {
+      display: block;
+      font-size: 0.85rem;
+      margin-bottom: 4px;
+      color: #374151;
+    }
+    input,
+    textarea {
+      width: 100%;
+      padding: 8px 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      font-size: 0.9rem;
+      font-family: inherit;
+    }
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+    .contact-info {
+      font-size: 0.95rem;
+      color: #374151;
+    }
+    .contact-info p {
+      margin-bottom: 6px;
+    }
+    .contact-info strong {
+      color: #111827;
+    }
+
+    footer {
+      padding: 14px 20px 20px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    @media (max-width: 768px) {
+      .hero,
+      .about,
+      .contact-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+    }
+  </style>
 </head>
-<body style="font-family: Arial; text-align:center; margin-top:50px;">
-  <h1>Hello from Cohen</h1>
-  <p>This site is deployed from GitHub to AWS.</p>
+<body>
+  <header>
+    <div class="container">
+      <nav class="nav">
+        <h1>Cohen Web Studio</h1>
+        <div>
+          <a href="#services">Services</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+
+      <div class="hero">
+        <div class="hero-text">
+          <h2>Simple, Modern Sites for Real Businesses</h2>
+          <p>
+            A clean, fast website that actually works for your business —
+            built and hosted on rock-solid infrastructure.
+          </p>
+          <div class="hero-actions">
+            <a href="#contact" class="btn-primary">Get in Touch</a>
+            <a href="#services" class="btn-secondary">View Services</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <h3>Live Demo Site</h3>
+          <p>This page is a working example deployed from GitHub to AWS Amplify.</p>
+          <p class="hero-highlight">
+            Edit the code in <code>index.html</code>, push to GitHub, and this site updates automatically.
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="services">
+      <h2>Services</h2>
+      <p class="section-intro">
+        This is just sample content so you can visualize how a small one-page site would look.
+      </p>
+      <div class="services-grid">
+        <div class="card">
+          <h3>Landing Pages</h3>
+          <p>Single-page sites focused on leads, calls, or bookings for local businesses.</p>
+        </div>
+        <div class="card">
+          <h3>Multi-Page Sites</h3>
+          <p>Home, About, Services, and Contact with a consistent design and fast load times.</p>
+        </div>
+        <div class="card">
+          <h3>Hosting & Updates</h3>
+          <p>Hosted on AWS with simple update workflows — change the content and redeploy.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <h2>About This Demo</h2>
+      <div class="about">
+        <div class="about-block">
+          <p class="about-highlight">Built with HTML + CSS</p>
+          <p>
+            This entire page is a single <code>index.html</code> file. No frameworks, no complexity —
+            just clean structure you can later swap out for a full client design.
+          </p>
+        </div>
+        <div class="about-block">
+          <p class="about-highlight">Deployed via GitHub → AWS Amplify</p>
+          <p>
+            Whenever you change this file in GitHub and commit, Amplify automatically redeploys and
+            your live site updates. This is the same flow you’ll use for real projects.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <div class="contact-grid">
+        <form onsubmit="alert('This is just a demo form – in a real site this would send an email or store a lead.'); return false;">
+          <label for="name">Name</label>
+          <input id="name" type="text" placeholder="Your name" />
+
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="you@example.com" />
+
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="Tell me a bit about your project"></textarea>
+
+          <button type="submit" class="btn-primary" style="margin-top: 4px;">Send Message</button>
+        </form>
+        <div class="contact-info">
+          <p><strong>Demo Only</strong> — replace this with real info for a client site.</p>
+          <p><strong>Phone:</strong> (555) 123-4567</p>
+          <p><strong>Email:</strong> hello@example.com</p>
+          <p><strong>Location:</strong> Dallas, TX</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; <span id="year"></span> Cohen Web Studio · Demo site running on AWS Amplify
+  </footer>
+
+  <script>
+    // Tiny script to keep the year current
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
